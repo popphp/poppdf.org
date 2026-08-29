@@ -1,0 +1,12 @@
+/logs
+/vendor
+/script
+/public/assets/css/app.css
+/public/assets/js/app.js
+node_modules
+composer.lock
+package-lock.json
+node_modules/
+.env
+.idea
+CLAUDE.md
