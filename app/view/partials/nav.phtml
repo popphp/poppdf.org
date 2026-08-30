@@ -1,8 +1,13 @@
 <?php
 /**
  * Sticky top bar. Optional: $page - 'build' | 'import' | 'extract' for the
- * current-page state. The link row scrolls rather than wraps on narrow
- * screens, which keeps the 68px height stable.
+ * current-page state.
+ *
+ * Above 700px this is one row: brand, links, then the actions cluster.
+ * Below it the link row collapses into a dropdown panel behind the hamburger,
+ * and only the theme toggle and the hamburger stay in the 68px bar. The panel
+ * is the same .nav__links element - it is re-laid-out, not duplicated - so
+ * there is one set of links in the DOM and one tab order.
  */
 $page  = $page ?? '';
 $links = ['build' => 'Build', 'import' => 'Import', 'extract' => 'Extract'];
@@ -13,13 +18,16 @@ $links = ['build' => 'Build', 'import' => 'Import', 'extract' => 'Extract'];
             <?php $markSize = 30; $markStroke = '2.7'; include __DIR__ . '/mark.phtml'; ?>
             <span class="wordmark">Pop PDF</span>
         </a>
-        <nav class="nav__links" aria-label="Main">
+        <nav class="nav__links" id="nav-menu" aria-label="Main">
 <?php foreach ($links as $key => $label): ?>
             <a href="/<?=$key ?>" class="nav-link<?=($page === $key) ? ' is-active' : '' ?>"<?=($page === $key) ? ' aria-current="page"' : '' ?>><?=$label ?></a>
 <?php endforeach; ?>
             <a href="https://docs.poppdf.org" class="nav-link nav-link--docs">Docs <span class="nav-link__ext">&#8599;</span></a>
             <a href="https://github.com/popphp/pop-pdf" class="nav-btn">GitHub</a>
-            <button type="button" data-theme-toggle aria-label="Toggle dark mode" class="theme-toggle"><svg data-icon="moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg><svg data-icon="sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M5.1 5.1l1.4 1.4M17.5 17.5l1.4 1.4M2.5 12h2M19.5 12h2M5.1 18.9l1.4-1.4M17.5 6.5l1.4-1.4"></path></svg></button>
         </nav>
+        <div class="nav__actions">
+            <button type="button" data-theme-toggle aria-label="Toggle dark mode" class="theme-toggle"><svg data-icon="moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"></path></svg><svg data-icon="sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2.5v2M12 19.5v2M5.1 5.1l1.4 1.4M17.5 17.5l1.4 1.4M2.5 12h2M19.5 12h2M5.1 18.9l1.4-1.4M17.5 6.5l1.4-1.4"></path></svg></button>
+            <button type="button" class="nav__burger" data-nav-toggle aria-label="Menu" aria-controls="nav-menu" aria-expanded="false"><svg data-icon="burger" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"></path></svg><svg data-icon="close" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"></path></svg></button>
+        </div>
     </div>
 </header>

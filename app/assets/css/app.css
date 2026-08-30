@@ -169,6 +169,11 @@
         border-bottom: 1px solid var(--rule);
     }
 
+    /* Three children now: brand, links, actions. `space-between` would strand
+       the link row in the middle, so the row is pushed right with an auto
+       margin instead and the gap is zeroed - the 6px between the GitHub button
+       and the theme toggle comes from .theme-toggle's own margin, as it did
+       when the toggle still lived inside the link row. */
     .nav__inner {
         max-width: 1200px;
         margin: 0 auto;
@@ -176,9 +181,22 @@
         height: 68px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        gap: clamp(16px, 3vw, 32px);
+        justify-content: flex-start;
+        gap: 0;
     }
+
+    /* margin-left replaces the .nav__links `gap: 6px` that used to fall between
+       the GitHub button and the theme toggle when the toggle was still a child
+       of the link row. Without it the whole row shifts 6px right. */
+    .nav__actions {
+        display: flex;
+        align-items: center;
+        margin-left: 6px;
+        margin-right: -13px;
+    }
+
+    /* Replaced by the hamburger under 700px - see the one media query below. */
+    .nav__burger { display: none; }
 
     .nav__brand {
         display: flex;
@@ -195,13 +213,12 @@
         letter-spacing: .005em;
     }
 
-    /* Scrolls rather than wraps on narrow screens, so the 68px stays stable. */
     .nav__links {
         display: flex;
         align-items: center;
         gap: 6px;
         font-size: 14.5px;
-        margin-right: -13px;
+        margin-left: auto;
         overflow-x: auto;
         scrollbar-width: none;
     }
@@ -273,6 +290,87 @@
     .theme-toggle:hover {
         border-color: var(--accent);
         color: var(--accent);
+    }
+
+    .nav__burger {
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        margin-left: 6px;
+        border: 1px solid var(--rule-2);
+        border-radius: 7px;
+        background: transparent;
+        color: var(--body);
+        cursor: pointer;
+        transition: border-color .15s, color .15s;
+    }
+
+    .nav__burger:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+    }
+
+    .nav__burger [data-icon="close"] { display: none; }
+    .nav__burger[aria-expanded="true"] [data-icon="burger"] { display: none; }
+    .nav__burger[aria-expanded="true"] [data-icon="close"] { display: block; }
+
+    /* -----------------------------------------------------------------
+       The one media query in this design.
+
+       Everything else here is fluid clamp() by intent - do not add more.
+       This exists because a nav cannot be made fluid past a point: below
+       roughly 620px the brand plus the 432px link row stops fitting, and
+       the row's hidden scrollbar left Docs, GitHub and the theme toggle
+       unreachable with no affordance that they were there at all. 700px
+       gives that crossover a margin.
+
+       .nav__links is re-laid-out as the panel rather than duplicated, so
+       there is one set of links in the DOM and one tab order. It anchors
+       to .nav (sticky, so it is the containing block) to span full-bleed
+       rather than the 1200px inner, and overlays the page instead of
+       pushing it - it is above .subnav's z-index 19.
+       ----------------------------------------------------------------- */
+    @media (max-width: 700px) {
+        .nav__burger { display: flex; }
+
+        .nav__actions {
+            margin-left: auto;
+            margin-right: -13px;
+        }
+
+        .nav__links {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 21;
+            display: none;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 2px;
+            margin: 0;
+            padding: 10px clamp(20px, 5vw, 40px) 16px;
+            background: var(--panel);
+            border-bottom: 1px solid var(--rule);
+            overflow-x: visible;
+        }
+
+        .nav__links.is-open { display: flex; }
+
+        .nav-link {
+            padding: 11px 13px;
+            border-radius: 8px;
+        }
+
+        .nav-link--docs { justify-content: flex-start; }
+
+        .nav-btn {
+            margin-left: 0;
+            margin-top: 8px;
+            text-align: center;
+            padding: 11px 13px;
+        }
     }
 
     /* ---------------------------------------------------------------
