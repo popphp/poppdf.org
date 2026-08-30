@@ -66,8 +66,8 @@ $codeFile = 'generate.php';
 $code     = <<<'HTML'
 <span class="tok-var">$page</span> = <span class="tok-var">$doc</span>-&gt;<span class="tok-fn">createPage</span>(<span class="tok-type">Page</span>::<span class="tok-fn">LETTER</span>);
 <span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(
-    <span class="tok-kw">new</span> <span class="tok-type">Text</span>(<span class="tok-str">'Hello'</span>, <span class="tok-num">12</span>),
-    <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, <span class="tok-num">50</span>, <span class="tok-num">742</span>
+    <span class="tok-kw">new</span> <span class="tok-type">Text</span>(<span class="tok-str">'Hello'</span>, size: <span class="tok-num">12</span>),
+    <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">742</span>
 );
 HTML;
 include __DIR__ . '/partials/code-window.phtml';
@@ -93,7 +93,7 @@ include __DIR__ . '/partials/code-window.phtml';
 $codeFile = 'modify.php';
 $code     = <<<'HTML'
 <span class="tok-var">$doc</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">importFromFile</span>(
-    <span class="tok-str">'contract.pdf'</span>, [<span class="tok-num">2</span>, <span class="tok-num">4</span>, <span class="tok-num">6</span>]
+    <span class="tok-str">'contract.pdf'</span>, pages: [<span class="tok-num">2</span>, <span class="tok-num">4</span>, <span class="tok-num">6</span>]
 );
 
 <span class="tok-type">Pdf</span>::<span class="tok-fn">writeToFile</span>(<span class="tok-var">$doc</span>, <span class="tok-str">'out.pdf'</span>);
@@ -118,7 +118,7 @@ include __DIR__ . '/partials/code-window.phtml';
 $codeFile = 'extract.php';
 $code     = <<<'HTML'
 <span class="tok-var">$text</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">extractTextFromFile</span>(
-    <span class="tok-str">'report.pdf'</span>, [<span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>]
+    <span class="tok-str">'report.pdf'</span>, pages: [<span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>]
 );
 
 <span class="tok-type">Pdf</span>::<span class="tok-fn">isImageOnlyDocument</span>(<span class="tok-str">'scan.pdf'</span>);

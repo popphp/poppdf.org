@@ -30,22 +30,23 @@ include __DIR__ . '/partials/subnav.phtml';
 $codeFile = 'stamp.php';
 $code     = <<<'HTML'
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Pdf</span>;
-<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Font</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page\Text</span>;
 
 <span class="tok-com">// the whole file
 </span><span class="tok-var">$doc</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">importFromFile</span>(<span class="tok-str">'contract.pdf'</span>);
 
 <span class="tok-com">// or only the pages you need
 </span><span class="tok-var">$doc</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">importFromFile</span>(
-    <span class="tok-str">'contract.pdf'</span>, [<span class="tok-num">2</span>, <span class="tok-num">4</span>, <span class="tok-num">6</span>]
+    <span class="tok-str">'contract.pdf'</span>, pages: [<span class="tok-num">2</span>, <span class="tok-num">4</span>, <span class="tok-num">6</span>]
 );
 
 <span class="tok-com">// register the font you stamp with
-</span><span class="tok-var">$doc</span>-&gt;<span class="tok-fn">addFont</span>(<span class="tok-type">Document\Font</span>::<span class="tok-fn">ARIAL_BOLD</span>);
+</span><span class="tok-var">$doc</span>-&gt;<span class="tok-fn">addFont</span>(<span class="tok-type">Font</span>::<span class="tok-fn">ARIAL_BOLD</span>);
 
 <span class="tok-var">$doc</span>-&gt;<span class="tok-fn">getPage</span>(<span class="tok-num">1</span>)-&gt;<span class="tok-fn">addText</span>(
-    <span class="tok-kw">new</span> <span class="tok-type">Document\Page\Text</span>(<span class="tok-str">'DRAFT'</span>, <span class="tok-num">48</span>),
-    <span class="tok-type">Document\Font</span>::<span class="tok-fn">ARIAL_BOLD</span>, <span class="tok-num">180</span>, <span class="tok-num">400</span>
+    <span class="tok-kw">new</span> <span class="tok-type">Text</span>(<span class="tok-str">'DRAFT'</span>, size: <span class="tok-num">48</span>),
+    <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL_BOLD</span>, x: <span class="tok-num">180</span>, y: <span class="tok-num">400</span>
 );
 
 <span class="tok-type">Pdf</span>::<span class="tok-fn">writeToFile</span>(<span class="tok-var">$doc</span>, <span class="tok-str">'contract-draft.pdf'</span>);

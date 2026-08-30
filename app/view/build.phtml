@@ -35,15 +35,17 @@ $codeFile = 'hello.php';
 $code     = <<<'HTML'
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Pdf</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Font</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page\Text</span>;
 
 <span class="tok-var">$document</span> = <span class="tok-kw">new</span> <span class="tok-type">Document</span>();
-<span class="tok-var">$document</span>-&gt;<span class="tok-fn">addFont</span>(<span class="tok-type">Document\Font</span>::<span class="tok-fn">ARIAL</span>);
+<span class="tok-var">$document</span>-&gt;<span class="tok-fn">addFont</span>(<span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>);
 
 <span class="tok-var">$page</span> = <span class="tok-var">$document</span>-&gt;<span class="tok-fn">createPage</span>(<span class="tok-type">Page</span>::<span class="tok-fn">LETTER</span>);
 <span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(
-    <span class="tok-kw">new</span> <span class="tok-type">Page\Text</span>(<span class="tok-str">'Hello World'</span>, <span class="tok-num">12</span>),
-    <span class="tok-type">Document\Font</span>::<span class="tok-fn">ARIAL</span>, <span class="tok-num">50</span>, <span class="tok-num">742</span>
+    <span class="tok-kw">new</span> <span class="tok-type">Text</span>(<span class="tok-str">'Hello World'</span>, size: <span class="tok-num">12</span>),
+    <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">742</span>
 );
 
 <span class="tok-type">Pdf</span>::<span class="tok-fn">writeToFile</span>(<span class="tok-var">$document</span>, <span class="tok-str">'hello.pdf'</span>);
@@ -108,6 +110,7 @@ $code     = <<<'HTML'
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Font</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page\Image</span>;
 
 <span class="tok-var">$document</span> = <span class="tok-kw">new</span> <span class="tok-type">Document</span>();
 <span class="tok-var">$document</span>-&gt;<span class="tok-fn">addFont</span>(<span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>)
@@ -118,13 +121,13 @@ $code     = <<<'HTML'
 </span><span class="tok-var">$document</span>-&gt;<span class="tok-fn">createStyle</span>(<span class="tok-str">'body'</span>, <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, <span class="tok-num">12</span>);
 
 <span class="tok-var">$page</span> = <span class="tok-var">$document</span>-&gt;<span class="tok-fn">createPage</span>(<span class="tok-type">Page</span>::<span class="tok-fn">LETTER</span>);
-<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(<span class="tok-str">'Q3 Results'</span>, <span class="tok-str">'body'</span>, <span class="tok-num">50</span>, <span class="tok-num">50</span>);
-
-<span class="tok-var">$image</span> = <span class="tok-type">Page\Image</span>::<span class="tok-fn">createImageFromFile</span>(
-    <span class="tok-str">'chart.jpg'</span>
+<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(
+    <span class="tok-str">'Q3 Results'</span>, <span class="tok-str">'body'</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">50</span>
 );
+
+<span class="tok-var">$image</span> = <span class="tok-type">Image</span>::<span class="tok-fn">createImageFromFile</span>(<span class="tok-str">'chart.jpg'</span>);
 <span class="tok-var">$image</span>-&gt;<span class="tok-fn">resizeToWidth</span>(<span class="tok-num">320</span>);
-<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addImage</span>(<span class="tok-var">$image</span>, <span class="tok-num">50</span>, <span class="tok-num">300</span>);
+<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addImage</span>(<span class="tok-var">$image</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">300</span>);
 
 <span class="tok-type">Pdf</span>::<span class="tok-fn">writeToFile</span>(<span class="tok-var">$document</span>, <span class="tok-str">'report.pdf'</span>);
 HTML;
@@ -151,6 +154,7 @@ $code     = <<<'HTML'
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Font</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page\Text</span>;
 
 <span class="tok-var">$document</span> = <span class="tok-kw">new</span> <span class="tok-type">Document</span>();
 <span class="tok-var">$page</span> = <span class="tok-var">$document</span>-&gt;<span class="tok-fn">createPage</span>(<span class="tok-type">Page</span>::<span class="tok-fn">LETTER</span>);
@@ -164,8 +168,8 @@ $code     = <<<'HTML'
 
 <span class="tok-com">// embedded fonts support non-Latin characters
 </span><span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(
-    <span class="tok-kw">new</span> <span class="tok-type">Page\Text</span>(<span class="tok-str">'123 ПРИВІТ:'</span>, <span class="tok-num">36</span>),
-    <span class="tok-var">$font</span>-&gt;<span class="tok-fn">getName</span>(), <span class="tok-num">50</span>, <span class="tok-num">600</span>
+    <span class="tok-kw">new</span> <span class="tok-type">Text</span>(<span class="tok-str">'123 ПРИВІТ:'</span>, size: <span class="tok-num">36</span>),
+    <span class="tok-var">$font</span>-&gt;<span class="tok-fn">getName</span>(), x: <span class="tok-num">50</span>, y: <span class="tok-num">600</span>
 );
 
 <span class="tok-com">// measure before you place
@@ -195,7 +199,8 @@ $code     = <<<'HTML'
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Font</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page</span>;
-<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page\Annotation</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page\Annotation\Link</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page\Annotation\Url</span>;
 
 <span class="tok-var">$document</span> = <span class="tok-kw">new</span> <span class="tok-type">Document</span>();
 <span class="tok-var">$font</span> = <span class="tok-kw">new</span> <span class="tok-type">Font</span>(<span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>);
@@ -204,22 +209,26 @@ $code     = <<<'HTML'
 
 <span class="tok-com">// external — hotspot sized to the text
 </span><span class="tok-var">$text</span> = <span class="tok-str">'Example'</span>;
-<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(<span class="tok-var">$text</span>, <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, <span class="tok-num">50</span>, <span class="tok-num">742</span>);
-<span class="tok-var">$url</span> = <span class="tok-kw">new</span> <span class="tok-type">Annotation\Url</span>(
+<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(
+    <span class="tok-var">$text</span>, <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">742</span>
+);
+<span class="tok-var">$url</span> = <span class="tok-kw">new</span> <span class="tok-type">Url</span>(
     <span class="tok-var">$font</span>-&gt;<span class="tok-fn">getStringWidth</span>(<span class="tok-var">$text</span>, <span class="tok-num">12</span>), <span class="tok-num">15</span>,
     <span class="tok-str">'https://example.com/'</span>
 );
-<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addUrl</span>(<span class="tok-var">$url</span>, <span class="tok-num">50</span>, <span class="tok-num">742</span>);
+<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addUrl</span>(<span class="tok-var">$url</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">742</span>);
 
 <span class="tok-com">// internal: page 2, at 110% zoom
 </span><span class="tok-var">$text</span> = <span class="tok-str">'Page 2'</span>;
-<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(<span class="tok-var">$text</span>, <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, <span class="tok-num">50</span>, <span class="tok-num">700</span>);
-<span class="tok-var">$link</span> = <span class="tok-kw">new</span> <span class="tok-type">Annotation\Link</span>(
+<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(
+    <span class="tok-var">$text</span>, <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">700</span>
+);
+<span class="tok-var">$link</span> = <span class="tok-kw">new</span> <span class="tok-type">Link</span>(
     <span class="tok-var">$font</span>-&gt;<span class="tok-fn">getStringWidth</span>(<span class="tok-var">$text</span>, <span class="tok-num">12</span>), <span class="tok-num">15</span>,
-    <span class="tok-num">10</span>, <span class="tok-num">752</span>
+    xTarget: <span class="tok-num">10</span>, yTarget: <span class="tok-num">752</span>
 );
 <span class="tok-var">$link</span>-&gt;<span class="tok-fn">setPageTarget</span>(<span class="tok-num">2</span>)-&gt;<span class="tok-fn">setZTarget</span>(<span class="tok-num">1.1</span>);
-<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addLink</span>(<span class="tok-var">$link</span>, <span class="tok-num">50</span>, <span class="tok-num">700</span>);
+<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addLink</span>(<span class="tok-var">$link</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">700</span>);
 
 <span class="tok-com">// the page that link jumps to
 </span><span class="tok-var">$document</span>-&gt;<span class="tok-fn">createPage</span>(<span class="tok-type">Page</span>::<span class="tok-fn">LETTER</span>);
@@ -249,11 +258,12 @@ $code     = <<<'HTML'
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Color\Color</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page\Path</span>;
 
 <span class="tok-var">$document</span> = <span class="tok-kw">new</span> <span class="tok-type">Document</span>();
 <span class="tok-var">$page</span> = <span class="tok-var">$document</span>-&gt;<span class="tok-fn">createPage</span>(<span class="tok-type">Page</span>::<span class="tok-fn">LETTER</span>);
 
-<span class="tok-var">$path</span> = <span class="tok-kw">new</span> <span class="tok-type">Page\Path</span>(<span class="tok-type">Page\Path</span>::<span class="tok-fn">FILL_STROKE</span>);
+<span class="tok-var">$path</span> = <span class="tok-kw">new</span> <span class="tok-type">Path</span>(<span class="tok-type">Path</span>::<span class="tok-fn">FILL_STROKE</span>);
 
 <span class="tok-var">$path</span>-&gt;<span class="tok-fn">setFillColor</span>(<span class="tok-type">Color</span>::<span class="tok-fn">rgb</span>(<span class="tok-num">155</span>, <span class="tok-num">20</span>, <span class="tok-num">20</span>))
     -&gt;<span class="tok-fn">setStrokeColor</span>(<span class="tok-type">Color</span>::<span class="tok-fn">rgb</span>(<span class="tok-num">81</span>, <span class="tok-num">125</span>, <span class="tok-num">153</span>))
@@ -287,20 +297,24 @@ $code     = <<<'HTML'
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Pdf</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Font</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Form</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page\Field\Text</span>;
 
 <span class="tok-var">$document</span> = <span class="tok-kw">new</span> <span class="tok-type">Document</span>();
 <span class="tok-var">$document</span>-&gt;<span class="tok-fn">addFont</span>(<span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>);
 <span class="tok-var">$page</span> = <span class="tok-var">$document</span>-&gt;<span class="tok-fn">createPage</span>(<span class="tok-type">Page</span>::<span class="tok-fn">LETTER</span>);
 
-<span class="tok-var">$form</span> = <span class="tok-kw">new</span> <span class="tok-type">Document\Form</span>(<span class="tok-str">'contact'</span>);
+<span class="tok-var">$form</span> = <span class="tok-kw">new</span> <span class="tok-type">Form</span>(<span class="tok-str">'contact'</span>);
 <span class="tok-var">$document</span>-&gt;<span class="tok-fn">addForm</span>(<span class="tok-var">$form</span>);
 
-<span class="tok-var">$name</span> = <span class="tok-kw">new</span> <span class="tok-type">Page\Field\Text</span>(<span class="tok-str">'name'</span>);
+<span class="tok-var">$name</span> = <span class="tok-kw">new</span> <span class="tok-type">Text</span>(<span class="tok-str">'name'</span>);
 <span class="tok-var">$name</span>-&gt;<span class="tok-fn">setWidth</span>(<span class="tok-num">200</span>)-&gt;<span class="tok-fn">setHeight</span>(<span class="tok-num">20</span>);
 
-<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(<span class="tok-str">'Name'</span>, <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, <span class="tok-num">50</span>, <span class="tok-num">725</span>);
-<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addField</span>(<span class="tok-var">$name</span>, <span class="tok-str">'contact'</span>, <span class="tok-num">50</span>, <span class="tok-num">700</span>);
+<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(
+    <span class="tok-str">'Name'</span>, <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">725</span>
+);
+<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addField</span>(<span class="tok-var">$name</span>, <span class="tok-str">'contact'</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">700</span>);
 
 <span class="tok-type">Pdf</span>::<span class="tok-fn">writeToFile</span>(<span class="tok-var">$document</span>, <span class="tok-str">'form.pdf'</span>);
 HTML;

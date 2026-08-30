@@ -34,12 +34,12 @@ $code     = <<<'HTML'
 
 <span class="tok-com">// scope it: pages 1–3 only
 </span><span class="tok-var">$text</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">extractTextFromFile</span>(
-    <span class="tok-str">'report.pdf'</span>, [<span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>]
+    <span class="tok-str">'report.pdf'</span>, pages: [<span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>]
 );
 
 <span class="tok-com">// or bound the work on a huge document
 </span><span class="tok-var">$text</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">extractTextFromFile</span>(
-    <span class="tok-str">'archive.pdf'</span>, <span class="tok-kw">null</span>, <span class="tok-num">50</span>
+    <span class="tok-str">'archive.pdf'</span>, pageLimit: <span class="tok-num">50</span>
 );
 HTML;
 include __DIR__ . '/partials/code-window.phtml';
@@ -101,8 +101,8 @@ $code     = <<<'HTML'
 </span><span class="tok-var">$images</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">extractAsImages</span>(
     <span class="tok-str">'scan.pdf'</span>,
     <span class="tok-str">'output/'</span>,
-    <span class="tok-str">'png'</span>,
-    <span class="tok-num">300</span>,
+    format: <span class="tok-str">'png'</span>,
+    resolution: <span class="tok-num">300</span>,
     filenameFormat: <span class="tok-str">'page-%2$02d'</span>,
     pages: [<span class="tok-num">1</span>, <span class="tok-num">3</span>]
 );
