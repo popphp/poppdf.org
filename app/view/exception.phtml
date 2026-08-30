@@ -1,89 +1,82 @@
-<!DOCTYPE html>
+<?php
+/**
+ * Uncaught exceptions bypass the controller entirely - App\Application::httpError()
+ * renders this with only $title and $message assigned. It has to stand on its own,
+ * so the styles are inline rather than from the built stylesheet, which may be the
+ * very thing that is missing.
+ */
+$code = $code ?? 500;
+$attr = fn(string $value): string => htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+?><!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title><?=$title; ?></title>
-    <link rel="icon" href="https://www.popphp.org/assets/img/pop-php-icon.png">
-    <style>
-        :root {
-            --pop-orange: #ce5403;
-            --pop-orange-dark: #9a3412;
-            --pop-orange-light: #e06726;
-            --ink: #0f172a;
-            --muted: #64748b;
-            --line: #e2e8f0;
-        }
-        * { box-sizing: border-box; }
-        html, body { height: 100%; margin: 0; }
-        body {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background: #f8fafc;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
-            color: var(--ink);
-        }
-        .stripe {
-            width: 100%;
-            background: var(--pop-orange-light);
-            padding: 56px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .logo { width: 180px; height: 180px; display: block; }
-        .content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 40px 24px 48px;
-        }
-        .card { width: 100%; max-width: 460px; }
-        .status-pill {
-            display: inline-block;
-            padding: 8px 22px;
-            border-radius: 999px;
-            background: #ce0029;
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: 800;
-            letter-spacing: 0.06em;
-            margin-bottom: 20px;
-            box-shadow: 0 6px 16px rgba(220, 38, 38, 0.35);
-        }
-        h1 { font-size: 48px; font-weight: 300; margin: 0 0 12px; letter-spacing: -0.02em; color: #57534e; }
-        p { font-size: 15px; line-height: 1.6; color: var(--muted); margin: 0; }
-        .message {
-            margin-top: 16px;
-            padding: 12px 16px;
-            background: #fff;
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            font-size: 13px;
-            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-            color: #334155;
-            text-align: left;
-            word-break: break-word;
-        }
-        footer { margin-top: 40px; font-size: 13px; color: var(--muted); }
-        footer a { color: var(--pop-orange); font-weight: 600; text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?=$attr($title) ?></title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<script>try{var t=localStorage.getItem('poppdf-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}</script>
+<style>
+  :root {
+    --ground:#faf8f4; --ink:#1a1815; --body:#4a4640; --muted:#8c8578; --rule:#e2dbcf;
+    --accent:#2f6f8f; --accent-hover:#1e4f68; --code-bg:#16150f; --code-base:#e8e3d9;
+  }
+  :root[data-theme="dark"] {
+    --ground:#181614; --ink:#f3efe8; --body:#c6c0b6; --muted:#9a9389; --rule:#312d29;
+    --accent:#7fb6ce; --accent-hover:#a5cede; --code-bg:#0d0c0b; --code-base:#e8e3d9;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-hover); }
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,5vw,40px); }
+  .bar { height: 68px; display: flex; align-items: center; gap: 11px; border-bottom: 1px solid var(--rule); }
+  .wordmark { font-family: "Instrument Serif", Georgia, serif; font-size: 23px; letter-spacing: .005em; }
+  .main { padding-top: clamp(72px,12vw,140px); padding-bottom: 64px; }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; letter-spacing: .13em;
+    text-transform: uppercase; color: var(--accent); margin-bottom: 22px;
+  }
+  h1 {
+    font-family: "Instrument Serif", Georgia, serif; font-weight: 400;
+    font-size: clamp(38px,6.4vw,66px); line-height: 1.05; letter-spacing: -.015em;
+    margin: 0 0 24px; max-width: 14em; text-wrap: pretty;
+  }
+  p { font-size: clamp(17px,1.9vw,19.5px); line-height: 1.6; color: var(--body); margin: 0 0 30px; max-width: 36em; }
+  pre {
+    margin: 0 0 32px; padding: 20px 24px; background: var(--code-bg); color: var(--code-base);
+    border-radius: 10px; font-family: "IBM Plex Mono", monospace; font-size: 13.5px;
+    line-height: 1.7; overflow-x: auto;
+  }
+  .links { display: flex; gap: 26px; font-size: 14.5px; flex-wrap: wrap; }
+</style>
 </head>
 <body>
-    <div class="stripe">
-        <img class="logo" src="https://media.popphp.org/img/pop-php-logo-white.png" alt="Pop PHP">
+<div class="wrap">
+    <div class="bar">
+        <svg width="30" height="30" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 11 C16 8 11 7 5 7 V31 C11 31 16 32 20 35" fill="none" style="stroke:var(--accent)" stroke-width="2.7" stroke-linejoin="round" stroke-linecap="round"></path><path d="M20 11 C24 8 29 7 35 7 V31 C29 31 24 32 20 35 Z" style="fill:var(--accent)"></path></svg>
+        <span class="wordmark">Pop PDF</span>
     </div>
-    <div class="content">
-        <div class="card">
-            <span class="status-pill">500</span>
-            <h1><?=$title;?></h1>
-            <p>Something went wrong while processing your request.</p>
-            <div class="message"><?=$message; ?></div>
-            <footer>Built with <a href="https://www.popphp.org" target="_blank" rel="noopener">Pop PHP</a></footer>
+    <div class="main">
+        <div class="eyebrow"><?=$attr((string)$code) ?> &mdash; Error</div>
+        <h1>Something went wrong.</h1>
+        <p>The site hit an error it could not recover from. Nothing is wrong with the library itself.</p>
+<?php if (!empty($message)): ?>
+        <pre><?=$attr($message) ?></pre>
+<?php endif; ?>
+        <div class="links">
+            <a href="/">Home</a>
+            <a href="https://docs.poppdf.org">Docs</a>
+            <a href="https://github.com/popphp/pop-pdf">GitHub</a>
         </div>
     </div>
+</div>
 </body>
 </html>

@@ -1,4 +1,14 @@
 {
+    "name": "popphp/poppdf.org",
+    "description": "The Pop PDF Website.",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Nick Sagona, III",
+            "email": "nick@popphp.org",
+            "homepage": "https://www.poppdf.org/"
+        }
+    ],
     "require": {
         "popphp/framework": "^7.0"
     },

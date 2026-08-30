@@ -1,0 +1,19 @@
+<?php
+/**
+ * A code window. Expects:
+ *   $codeFile - the file name shown in the bar
+ *   $code     - pre-marked-up code (tok-* spans), emitted verbatim
+ *
+ * Any grid or flex track holding one of these needs a fixed (never auto)
+ * min-width, or the <pre>'s min-content width forces the whole page wide.
+ * Both are cleared on the way out so they cannot leak into the next window.
+ */
+?>
+<div class="code-window" data-copy-root>
+    <div class="code-window__bar">
+        <span class="code-window__file"><?=$codeFile ?></span>
+        <?php include __DIR__ . '/copy-button.phtml'; ?>
+    </div>
+<pre><?=$code ?></pre>
+</div>
+<?php $codeFile = null; $code = null; ?>

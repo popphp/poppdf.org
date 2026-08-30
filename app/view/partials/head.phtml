@@ -1,0 +1,49 @@
+<?php
+/**
+ * Document head + opening body. Included at the top of every page view.
+ * Expects:  $title        (the full <title>, e.g. 'Build - Pop PDF')
+ * Optional: $description  (falls back to the site-wide description)
+ *
+ * The canonical and social tags need absolute URLs and APP_URL is only ever the
+ * local placeholder, so the base is hard-coded once here.
+ */
+$siteUrl     = 'https://www.poppdf.org';
+$description = $description ?? 'Generate documents, import and modify the ones you have, merge them, and read the content back out - one dependency.';
+$pageUrl     = $siteUrl . strtok($_SERVER['REQUEST_URI'] ?? '/', '?');
+$socialImage = $siteUrl . '/og-image.png';
+
+$attr = fn(string $value): string => htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+?><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title><?=$attr($title) ?></title>
+<meta name="description" content="<?=$attr($description) ?>">
+<link rel="canonical" href="<?=$attr($pageUrl) ?>">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Pop PDF">
+<meta property="og:title" content="<?=$attr($title) ?>">
+<meta property="og:description" content="<?=$attr($description) ?>">
+<meta property="og:url" content="<?=$attr($pageUrl) ?>">
+<meta property="og:image" content="<?=$attr($socialImage) ?>">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="Pop PDF &mdash; a standalone PDF library for PHP.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="<?=$attr($title) ?>">
+<meta name="twitter:description" content="<?=$attr($description) ?>">
+<meta name="twitter:image" content="<?=$attr($socialImage) ?>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/assets/css/app.css">
+<script>try{var t=localStorage.getItem('poppdf-theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches)){document.documentElement.setAttribute('data-theme','dark');}}catch(e){}</script>
+<script type="module" src="/assets/js/app.js"></script>
+</head>
+<body>

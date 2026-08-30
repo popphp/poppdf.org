@@ -1,0 +1,119 @@
+<?php include __DIR__ . '/partials/head.phtml'; ?>
+<?php include __DIR__ . '/partials/nav.phtml'; ?>
+<?php
+$sections = [
+    'text'      => 'Extract text',
+    'detect'    => 'Image-only detection',
+    'as-images' => 'As images',
+];
+include __DIR__ . '/partials/subnav.phtml';
+?>
+
+<div class="page-head">
+    <div class="eyebrow page-head__eyebrow">03 &mdash; Extract</div>
+    <h1 class="page-head__title">Get the content back out.</h1>
+    <p class="page-head__lead">Text extraction is native &mdash; no parser library behind it &mdash; and works on documents built with embedded fonts, not just the standard fourteen. When a file turns out to be a scan, you can find that out in one call and rasterize its pages to prep for OCR hand-off.</p>
+</div>
+
+<section id="text" class="feature feature--first">
+    <div class="feature__grid">
+        <div>
+            <div class="feature__head">
+                <span class="feature__num">11</span>
+                <h2 class="feature__title">Extract text</h2>
+            </div>
+            <p class="feature__lead">Pull the text out of a document, all of it or page by page. Both arguments are there for volume: name the pages you care about, or cap how many get processed on a file that could be thousands.</p>
+            <a href="https://docs.poppdf.org/extract/text" class="doc-link">Text extraction in the docs &rarr;</a>
+        </div>
+<?php
+$codeFile = 'text.php';
+$code     = <<<'HTML'
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Pdf</span>;
+
+<span class="tok-var">$text</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">extractTextFromFile</span>(<span class="tok-str">'report.pdf'</span>);
+
+<span class="tok-com">// scope it: pages 1–3 only
+</span><span class="tok-var">$text</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">extractTextFromFile</span>(
+    <span class="tok-str">'report.pdf'</span>, [<span class="tok-num">1</span>, <span class="tok-num">2</span>, <span class="tok-num">3</span>]
+);
+
+<span class="tok-com">// or bound the work on a huge document
+</span><span class="tok-var">$text</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">extractTextFromFile</span>(
+    <span class="tok-str">'archive.pdf'</span>, <span class="tok-kw">null</span>, <span class="tok-num">50</span>
+);
+HTML;
+include __DIR__ . '/partials/code-window.phtml';
+?>
+    </div>
+</section>
+
+<section id="detect" class="feature">
+    <div class="feature__grid">
+        <div>
+            <div class="feature__head">
+                <span class="feature__num">12</span>
+                <h2 class="feature__title">Image-only detection</h2>
+            </div>
+            <p class="feature__lead">A scanned document looks identical to a real one until you try to read it, and then you get an empty string back with nothing to explain it. One call tells you which you have, so the pipeline can route instead of guess.</p>
+            <p class="feature__note">Mixed documents &mdash; a typed contract with scanned exhibits stapled on the end &mdash; report per page.</p>
+            <a href="https://docs.poppdf.org/extract/detection" class="doc-link">Detection in the docs &rarr;</a>
+        </div>
+<?php
+$codeFile = 'detect.php';
+$code     = <<<'HTML'
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Pdf</span>;
+
+<span class="tok-kw">if</span> (<span class="tok-type">Pdf</span>::<span class="tok-fn">isImageOnlyDocument</span>(<span class="tok-str">'incoming.pdf'</span>)) {
+    <span class="tok-com">// every page is a scan</span>
+}
+
+<span class="tok-com">// per-page, for mixed documents
+</span><span class="tok-var">$pages</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">getImageOnlyPages</span>(<span class="tok-str">'incoming.pdf'</span>);
+
+<span class="tok-com">// [0 =&gt; true, 1 =&gt; false, 2 =&gt; true]</span>
+HTML;
+include __DIR__ . '/partials/code-window.phtml';
+?>
+    </div>
+</section>
+
+<section id="as-images" class="feature">
+    <div class="feature__grid">
+        <div>
+            <div class="feature__head">
+                <span class="feature__num">13</span>
+                <h2 class="feature__title">Extract as images</h2>
+            </div>
+            <p class="feature__lead">One image per page at 300 DPI, written to disk one at a time so memory stays flat no matter how long the document runs. <span class="code-inline code-inline--em">jpg</span>, <span class="code-inline code-inline--em">png</span>, <span class="code-inline code-inline--em">webp</span> and <span class="code-inline code-inline--em">tiff</span>; lossy formats are written at quality 90 to protect OCR accuracy.</p>
+            <p class="limit">Uses the Imagick extension &mdash; the one feature that needs it. Pop PDF does not perform OCR; it detects the scans and produces the images an OCR engine takes as input.</p>
+            <a href="https://docs.poppdf.org/extract/images" class="doc-link">Rasterizing in the docs &rarr;</a>
+        </div>
+<?php
+$codeFile = 'rasterize.php';
+$code     = <<<'HTML'
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Pdf</span>;
+
+<span class="tok-var">$images</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">extractAsImages</span>(<span class="tok-str">'scan.pdf'</span>, <span class="tok-str">'output/'</span>);
+
+<span class="tok-com">// [1 =&gt; 'output/scan-01.jpg', 2 =&gt; ...]
+
+</span><span class="tok-com">// png, specific pages, custom naming
+</span><span class="tok-var">$images</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">extractAsImages</span>(
+    <span class="tok-str">'scan.pdf'</span>,
+    <span class="tok-str">'output/'</span>,
+    <span class="tok-str">'png'</span>,
+    <span class="tok-num">300</span>,
+    filenameFormat: <span class="tok-str">'page-%2$02d'</span>,
+    pages: [<span class="tok-num">1</span>, <span class="tok-num">3</span>]
+);
+HTML;
+include __DIR__ . '/partials/code-window.phtml';
+?>
+    </div>
+</section>
+
+<?php
+$installClass = 'install--after-features';
+include __DIR__ . '/partials/install-band.phtml';
+?>
+<?php include __DIR__ . '/partials/footer.phtml'; ?>

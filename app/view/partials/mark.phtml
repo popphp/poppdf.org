@@ -1,0 +1,13 @@
+<?php
+/**
+ * The Spread mark - an open document, left leaf outlined, right leaf solid.
+ * Bare paths, no wrapper shape. Geometry and the per-size optical stroke
+ * weights are fixed: 2.7 at 30px, 2.9 at 26px, 3.6 at 16px.
+ *
+ * Expects: $markSize, $markStroke
+ *
+ * The colour goes in style, not in the fill/stroke attribute - presentation
+ * attributes do not accept var().
+ */
+?>
+<svg width="<?=$markSize ?>" height="<?=$markSize ?>" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 11 C16 8 11 7 5 7 V31 C11 31 16 32 20 35" fill="none" style="stroke:var(--accent)" stroke-width="<?=$markStroke ?>" stroke-linejoin="round" stroke-linecap="round"></path><path d="M20 11 C24 8 29 7 35 7 V31 C29 31 24 32 20 35 Z" style="fill:var(--accent)"></path></svg>

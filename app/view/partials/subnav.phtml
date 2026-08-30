@@ -1,0 +1,17 @@
+<?php
+/**
+ * "On this page" bar - sticky at top:68px, under the nav. Every anchor it
+ * points at must carry scroll-margin-top:132px (the .feature class does) or
+ * the heading lands under the stacked chrome.
+ *
+ * Expects: $sections - [anchor => label]
+ */
+?>
+<div class="subnav">
+    <div class="subnav__inner">
+        <span class="subnav__label">On this page</span>
+<?php foreach ($sections as $anchor => $label): ?>
+        <a href="#<?=$anchor ?>" class="subnav__link"><?=$label ?></a>
+<?php endforeach; ?>
+    </div>
+</div>

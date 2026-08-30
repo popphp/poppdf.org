@@ -1,0 +1,12 @@
+<?php
+/**
+ * Install line. Optional: $terminalSmall - true for the tighter hero variant.
+ */
+$terminalSmall = $terminalSmall ?? false;
+?>
+<div class="terminal<?=$terminalSmall ? ' terminal--sm' : '' ?>" data-copy-root>
+    <span class="terminal__prompt">$</span>
+    <span class="terminal__cmd" data-copy-text>composer require popphp/pop-pdf</span>
+    <?php include __DIR__ . '/copy-button.phtml'; ?>
+</div>
+<?php $terminalSmall = false; ?>

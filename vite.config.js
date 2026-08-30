@@ -8,6 +8,10 @@ export default defineConfig({
     ],
     build: {
         outDir: 'public/assets',
+        // Vite empties outDir by default, which deletes the tracked .empty
+        // placeholders that keep public/assets/{css,js} in git. The build only
+        // ever writes those two files, so there is nothing stale to clear.
+        emptyOutDir: false,
         rollupOptions: {
             input: 'app/assets/js/app.js',
             output: {

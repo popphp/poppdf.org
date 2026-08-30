@@ -1,22 +1,36 @@
 <?php
+/**
+ * HTTP application config
+ *
+ * Routes are explicit: one entry per page, one controller action per page.
+ * The route table doubles as the sitemap.
+ */
 
 return [
     'routes' => [
-        'get' => [
-            '/api[/]' => [
-                'controller' => 'App\Http\Controller\IndexController',
-                'action'     => 'index'
-            ],
-            '[/]' => [
-                'controller' => 'App\Http\Controller\IndexController',
-                'action'     => 'index'
-            ],
+        '[/]' => [
+            'controller' => 'App\Http\Controller\IndexController',
+            'action'     => 'index'
+        ],
+        '/build[/]' => [
+            'controller' => 'App\Http\Controller\IndexController',
+            'action'     => 'build'
+        ],
+        '/import[/]' => [
+            'controller' => 'App\Http\Controller\IndexController',
+            'action'     => 'import'
+        ],
+        '/extract[/]' => [
+            'controller' => 'App\Http\Controller\IndexController',
+            'action'     => 'extract'
+        ],
+        '/license[/]' => [
+            'controller' => 'App\Http\Controller\IndexController',
+            'action'     => 'license'
         ],
         '*' => [
-            '*'    => [
-                'controller' => 'App\Http\Controller\IndexController',
-                'action'     => 'error'
-            ]
+            'controller' => 'App\Http\Controller\IndexController',
+            'action'     => 'error'
         ]
     ],
 

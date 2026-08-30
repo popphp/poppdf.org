@@ -169,4 +169,30 @@ abstract class AbstractController extends \Pop\Controller\AbstractController
         $this->view = new View($this->viewPath . '/' . $template);
     }
 
+    /**
+     * Render a page view
+     *
+     * The 3-line helper every static page action calls. $page is read by the
+     * nav partial for the current-page state; $description feeds the meta and
+     * social tags in the head partial.
+     *
+     * @param  string  $template
+     * @param  string  $title
+     * @param  ?string $page
+     * @param  ?string $description
+     * @return void
+     */
+    protected function renderPage(string $template, string $title, ?string $page = null, ?string $description = null): void
+    {
+        $this->prepareView($template);
+        $this->view->title = $title;
+        $this->view->page  = $page;
+
+        if ($description !== null) {
+            $this->view->description = $description;
+        }
+
+        $this->send();
+    }
+
 }
