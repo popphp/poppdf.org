@@ -3,11 +3,11 @@
 <?php
 $sections = [
     'simple'      => 'Simple',
+    'html'        => 'HTML',
     'advanced'    => 'Advanced',
     'fonts'       => 'Fonts',
     'annotations' => 'Annotations',
     'paths'       => 'Paths',
-    'html'        => 'HTML',
     'forms'       => 'Forms',
 ];
 include __DIR__ . '/partials/subnav.phtml';
@@ -16,7 +16,7 @@ include __DIR__ . '/partials/subnav.phtml';
 <div class="page-head">
     <div class="eyebrow page-head__eyebrow">01 &mdash; Build</div>
     <h1 class="page-head__title">Make a PDF from nothing.</h1>
-    <p class="page-head__lead">A one-page document is eight lines. The same objects &mdash; pages, fonts, text, paths, images, fields &mdash; can compose a 400-page catalog, and the parser will take HTML if you would rather write markup.</p>
+    <p class="page-head__lead">A one-page document from scratch is a few lines. Or pass it HTML and it does the work for you. Either way you get back the same document object &mdash; keep adding to it, write it to disk, or send it to the browser.</p>
 </div>
 
 <section id="simple" class="feature feature--first">
@@ -53,11 +53,44 @@ include __DIR__ . '/partials/code-window.phtml';
     </div>
 </section>
 
-<section id="advanced" class="feature">
+<section id="html" class="feature">
     <div class="feature__grid">
         <div>
             <div class="feature__head">
                 <span class="feature__num">02</span>
+                <h2 class="feature__title">HTML&#8209;to&#8209;PDF</h2>
+            </div>
+            <p class="feature__lead">Render HTML and CSS into pages without a headless browser. Render your template however you already do, and pass the string straight in.</p>
+            <p class="feature__note feature__note--tight">Got a file on disk with linked stylesheets and images instead? <span class="code-inline code-inline--em">Pdf::importFromHtmlFile()</span> takes the path.</p>
+            <div class="feature__list feature__list--tight">
+                <div><span class="code-inline">colspan</span>, <span class="code-inline">rowspan</span>, and header rows that repeat across page breaks</div>
+                <div>Borders and background colors on any element, not just cells</div>
+            </div>
+            <p class="limit">Known limits: no <span class="code-inline code-inline--sm">border-collapse</span>, no nested tables, and less common CSS may not be covered.</p>
+            <a href="https://docs.poppdf.org/build/html" class="doc-link">HTML parsing in the docs &rarr;</a>
+        </div>
+<?php
+$codeFile = 'invoice.php';
+$code     = <<<'HTML'
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Pdf</span>;
+
+<span class="tok-com">// however you already render templates
+</span><span class="tok-var">$html</span> = <span class="tok-str">'&lt;h1&gt;Invoice 1234&lt;/h1&gt;'</span>;
+
+<span class="tok-var">$document</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">importFromHtml</span>(<span class="tok-var">$html</span>);
+
+<span class="tok-type">Pdf</span>::<span class="tok-fn">writeToFile</span>(<span class="tok-var">$document</span>, <span class="tok-str">'invoice.pdf'</span>);
+HTML;
+include __DIR__ . '/partials/code-window.phtml';
+?>
+    </div>
+</section>
+
+<section id="advanced" class="feature">
+    <div class="feature__grid">
+        <div>
+            <div class="feature__head">
+                <span class="feature__num">03</span>
                 <h2 class="feature__title">Advanced generation</h2>
             </div>
             <p class="feature__lead">Named styles so a type change is one edit. Images that resize on the way in. Compression on a flag. And an origin you can move to the top left, if PDF&rsquo;s bottom-left math isn&rsquo;t how you think.</p>
@@ -104,7 +137,7 @@ include __DIR__ . '/partials/code-window.phtml';
     <div class="feature__grid">
         <div>
             <div class="feature__head">
-                <span class="feature__num">03</span>
+                <span class="feature__num">04</span>
                 <h2 class="feature__title">Simple &amp; complex fonts</h2>
             </div>
             <p class="feature__lead">The standard 14 fonts are built in and ship with every reader. Embed TrueType, OpenType or Type1 and they compile as composite CID fonts with a <span class="code-inline code-inline--lg">/ToUnicode</span> CMap &mdash; so non-Latin text renders correctly <em>and</em> still copies and extracts.</p>
@@ -149,7 +182,7 @@ include __DIR__ . '/partials/code-window.phtml';
     <div class="feature__grid">
         <div>
             <div class="feature__head">
-                <span class="feature__num">04</span>
+                <span class="feature__num">05</span>
                 <h2 class="feature__title">Annotations &amp; links</h2>
             </div>
             <p class="feature__lead">Link out to a URL, or jump to a page, coordinate and zoom level inside the same document &mdash; which is what a generated table of contents needs.</p>
@@ -202,7 +235,7 @@ include __DIR__ . '/partials/code-window.phtml';
     <div class="feature__grid">
         <div>
             <div class="feature__head">
-                <span class="feature__num">05</span>
+                <span class="feature__num">06</span>
                 <h2 class="feature__title">Drawing paths</h2>
             </div>
             <p class="feature__lead">Vector graphics, not a bitmap pasted on top. Lines, rectangles, rounded rectangles, polygons, ellipses, arcs, chords and pies, with fill, stroke, dash and clipping styles.</p>
@@ -231,39 +264,6 @@ $code     = <<<'HTML'
 <span class="tok-var">$page</span>-&gt;<span class="tok-fn">addPath</span>(<span class="tok-var">$path</span>);
 
 <span class="tok-type">Pdf</span>::<span class="tok-fn">writeToFile</span>(<span class="tok-var">$document</span>, <span class="tok-str">'paths.pdf'</span>);
-HTML;
-include __DIR__ . '/partials/code-window.phtml';
-?>
-    </div>
-</section>
-
-<section id="html" class="feature">
-    <div class="feature__grid">
-        <div>
-            <div class="feature__head">
-                <span class="feature__num">06</span>
-                <h2 class="feature__title">HTML&#8209;to&#8209;PDF</h2>
-            </div>
-            <p class="feature__lead">Render HTML and CSS into pages without a headless browser. Render your template however you already do, and pass the string straight in.</p>
-            <p class="feature__note feature__note--tight">Got a file on disk with linked stylesheets and images instead? <span class="code-inline code-inline--em">Pdf::importFromHtmlFile()</span> takes the path.</p>
-            <div class="feature__list feature__list--tight">
-                <div><span class="code-inline">colspan</span>, <span class="code-inline">rowspan</span>, and header rows that repeat across page breaks</div>
-                <div>Borders and background colors on any element, not just cells</div>
-            </div>
-            <p class="limit">Known limits: no <span class="code-inline code-inline--sm">border-collapse</span>, no nested tables, and less common CSS may not be covered.</p>
-            <a href="https://docs.poppdf.org/build/html" class="doc-link">HTML parsing in the docs &rarr;</a>
-        </div>
-<?php
-$codeFile = 'invoice.php';
-$code     = <<<'HTML'
-<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Pdf</span>;
-
-<span class="tok-com">// however you already render templates
-</span><span class="tok-var">$html</span> = <span class="tok-str">'&lt;h1&gt;Invoice 1234&lt;/h1&gt;'</span>;
-
-<span class="tok-var">$document</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">importFromHtml</span>(<span class="tok-var">$html</span>);
-
-<span class="tok-type">Pdf</span>::<span class="tok-fn">writeToFile</span>(<span class="tok-var">$document</span>, <span class="tok-str">'invoice.pdf'</span>);
 HTML;
 include __DIR__ . '/partials/code-window.phtml';
 ?>

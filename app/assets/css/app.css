@@ -128,6 +128,7 @@
     .nav__inner,
     .subnav__inner,
     .hero,
+    .tagline,
     .map,
     .page-head,
     .feature,
@@ -660,6 +661,41 @@
        Flex, not grid: a grid track can't grow when a child wraps,
        which strands a half-empty row at tablet widths.
        --------------------------------------------------------------- */
+
+    /* ---------------------------------------------------------------
+       Tagline band - the one centred moment on the page.
+
+       Speaks to both halves of the audience at once: fine-grained control
+       and the one-call path. It is its own section rather than a heading on
+       #map so it reads as a claim in its own right. Top and bottom are a
+       matched pair - the bottom comes from the `.tagline + .map` rule below.
+       --------------------------------------------------------------- */
+
+    .tagline {
+        max-width: 1200px;
+        margin: clamp(60px, 6.6vw, 82px) auto 0;
+        padding: 0 clamp(20px, 5vw, 40px);
+        text-align: center;
+    }
+
+    /* .map keeps its original 110px for its own sake; when the band precedes it
+       the gap is matched to the band's top instead, so the section sits evenly
+       between the hero and the columns. */
+    .tagline + .map { margin-top: clamp(60px, 6.6vw, 82px); }
+
+    .tagline__title {
+        font-family: var(--font-serif);
+        font-weight: 400;
+        font-size: clamp(32px, 5vw, 52px);
+        line-height: 1.14;
+        letter-spacing: -.014em;
+        color: var(--ink);
+        /* 20ch breaks after "simple", so both poles sit together on line one
+           and the qualifier takes line two. 22ch strands "as"; 19ch splits
+           "as / simple" mid-clause. */
+        max-width: 20ch;
+        margin: 0 auto;
+    }
 
     .map {
         max-width: 1200px;
