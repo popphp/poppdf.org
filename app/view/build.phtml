@@ -37,15 +37,13 @@ $code     = <<<'HTML'
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Font</span>;
 <span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page</span>;
-<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page\Text</span>;
 
 <span class="tok-var">$document</span> = <span class="tok-kw">new</span> <span class="tok-type">Document</span>();
 <span class="tok-var">$document</span>-&gt;<span class="tok-fn">addFont</span>(<span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>);
 
 <span class="tok-var">$page</span> = <span class="tok-var">$document</span>-&gt;<span class="tok-fn">createPage</span>(<span class="tok-type">Page</span>::<span class="tok-fn">LETTER</span>);
 <span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(
-    <span class="tok-kw">new</span> <span class="tok-type">Text</span>(<span class="tok-str">'Hello World'</span>, size: <span class="tok-num">12</span>),
-    <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">742</span>
+    <span class="tok-str">'Hello World'</span>, <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">742</span>
 );
 
 <span class="tok-type">Pdf</span>::<span class="tok-fn">writeToFile</span>(<span class="tok-var">$document</span>, <span class="tok-str">'hello.pdf'</span>);
@@ -207,8 +205,8 @@ $code     = <<<'HTML'
 <span class="tok-var">$document</span>-&gt;<span class="tok-fn">addFont</span>(<span class="tok-var">$font</span>);
 <span class="tok-var">$page</span> = <span class="tok-var">$document</span>-&gt;<span class="tok-fn">createPage</span>(<span class="tok-type">Page</span>::<span class="tok-fn">LETTER</span>);
 
-<span class="tok-com">// external — hotspot sized to the text
-</span><span class="tok-var">$text</span> = <span class="tok-str">'Example'</span>;
+<span class="tok-com">// external — hotspot sized to the text</span>
+<span class="tok-var">$text</span> = <span class="tok-str">'Example'</span>;
 <span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(
     <span class="tok-var">$text</span>, <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">742</span>
 );
@@ -218,8 +216,8 @@ $code     = <<<'HTML'
 );
 <span class="tok-var">$page</span>-&gt;<span class="tok-fn">addUrl</span>(<span class="tok-var">$url</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">742</span>);
 
-<span class="tok-com">// internal: page 2, at 110% zoom
-</span><span class="tok-var">$text</span> = <span class="tok-str">'Page 2'</span>;
+<span class="tok-com">// internal: page 2, at 110% zoom</span>
+<span class="tok-var">$text</span> = <span class="tok-str">'Page 2'</span>;
 <span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(
     <span class="tok-var">$text</span>, <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">700</span>
 );

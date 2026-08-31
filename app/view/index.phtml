@@ -64,10 +64,10 @@
 <?php
 $codeFile = 'generate.php';
 $code     = <<<'HTML'
+<span class="tok-var">$doc</span> = <span class="tok-kw">new</span> <span class="tok-type">Pop\Pdf\Document</span>();
 <span class="tok-var">$page</span> = <span class="tok-var">$doc</span>-&gt;<span class="tok-fn">createPage</span>(<span class="tok-type">Page</span>::<span class="tok-fn">LETTER</span>);
 <span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(
-    <span class="tok-kw">new</span> <span class="tok-type">Text</span>(<span class="tok-str">'Hello'</span>, size: <span class="tok-num">12</span>),
-    <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">742</span>
+    <span class="tok-str">'Hello'</span>, <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">742</span>
 );
 HTML;
 include __DIR__ . '/partials/code-window.phtml';
