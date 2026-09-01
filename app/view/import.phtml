@@ -2,9 +2,10 @@
 <?php include __DIR__ . '/partials/nav.phtml'; ?>
 <?php
 $sections = [
-    'modify' => 'Import &amp; modify',
-    'merge'  => 'Merge',
-    'images' => 'From images',
+    'modify'    => 'Import &amp; modify',
+    'merge'     => 'Merge',
+    'protected' => 'Protected',
+    'images'    => 'From images',
 ];
 include __DIR__ . '/partials/subnav.phtml';
 ?>
@@ -19,12 +20,12 @@ include __DIR__ . '/partials/subnav.phtml';
     <div class="feature__grid">
         <div>
             <div class="feature__head">
-                <span class="feature__num">08</span>
+                <span class="feature__num">09</span>
                 <h2 class="feature__title">Import &amp; modify</h2>
             </div>
             <p class="feature__lead">Import a whole file, or name the pages you want and leave the rest on disk. Then stamp it, annotate it, add pages, reorder them, and write it back out.</p>
             <p class="feature__note">Working from a stream rather than a path &mdash; an upload, an S3 object, a queue payload? <span class="code-inline code-inline--em">Pdf::importRawData()</span> takes the bytes.</p>
-            <a href="https://docs.poppdf.org/import/modify" class="doc-link">Importing in the docs &rarr;</a>
+            <a href="https://docs.poppdf.org/import/modify" class="doc-link" target="_blank">Importing in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'stamp.php';
@@ -60,12 +61,12 @@ include __DIR__ . '/partials/code-window.phtml';
     <div class="feature__grid">
         <div>
             <div class="feature__head">
-                <span class="feature__num">09</span>
+                <span class="feature__num">10</span>
                 <h2 class="feature__title">Merge PDFs</h2>
             </div>
             <p class="feature__lead">Combine files in order, into one document object you can keep working on &mdash; add a cover page, number the result, stamp it &mdash; before you write it.</p>
             <p class="feature__note">Same story for streams: <span class="code-inline code-inline--em">Pdf::mergeRawData()</span>.</p>
-            <a href="https://docs.poppdf.org/import/merge" class="doc-link">Merging in the docs &rarr;</a>
+            <a href="https://docs.poppdf.org/import/merging" class="doc-link" target="_blank">Merging in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'merge.php';
@@ -85,16 +86,51 @@ include __DIR__ . '/partials/code-window.phtml';
     </div>
 </section>
 
+<section id="protected" class="feature">
+    <div class="feature__grid">
+        <div>
+            <div class="feature__head">
+                <span class="feature__num">11</span>
+                <h2 class="feature__title">Open a protected PDF</h2>
+            </div>
+            <p class="feature__lead">An encrypted source opens with its password and is transparent from there &mdash; the document you get back is the same object as any other, with no memory of having been locked. Merging takes one password per source, so a protected file can be combined with plain ones.</p>
+            <p class="feature__note">Either password works to open it. The Standard Security Handler only distinguishes the two when deciding which permissions apply afterwards.</p>
+            <p class="limit">Writing an imported document back out drops the encryption unless you call <span class="code-inline code-inline--em">setSecurity()</span> again &mdash; and on an imported document that call does not yet reach literal strings carried over from the source, such as an annotation URL.</p>
+            <a href="https://docs.poppdf.org/import/encrypted" class="doc-link" target="_blank">Protected PDFs in the docs &rarr;</a>
+        </div>
+<?php
+$codeFile = 'unlock.php';
+$code     = <<<'HTML'
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Pdf</span>;
+
+<span class="tok-com">// either password opens the document
+</span><span class="tok-var">$doc</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">importFromFile</span>(
+    <span class="tok-str">'statement.pdf'</span>, password: <span class="tok-str">'open-me'</span>
+);
+
+<span class="tok-com">// merging: key each password by its index
+</span><span class="tok-var">$doc</span> = <span class="tok-type">Pdf</span>::<span class="tok-fn">merge</span>([
+    <span class="tok-str">'cover.pdf'</span>,
+    <span class="tok-str">'statement.pdf'</span>,
+], passwords: [<span class="tok-num">1</span> =&gt; <span class="tok-str">'open-me'</span>]);
+
+<span class="tok-type">Pdf</span>::<span class="tok-fn">writeToFile</span>(<span class="tok-var">$doc</span>, <span class="tok-str">'combined.pdf'</span>);
+HTML;
+include __DIR__ . '/partials/code-window.phtml';
+?>
+    </div>
+</section>
+
 <section id="images" class="feature">
     <div class="feature__grid">
         <div>
             <div class="feature__head">
-                <span class="feature__num">10</span>
+                <span class="feature__num">12</span>
                 <h2 class="feature__title">Build a PDF from images</h2>
             </div>
             <p class="feature__lead">Hand it an array of images and each one becomes a page. Useful for turning a batch of scans, screenshots or camera photos into a single document.</p>
             <p class="feature__note">This is the exact inverse of <a href="/extract#as-images">extracting pages as images</a> &mdash; the same library does the round trip.</p>
-            <a href="https://docs.poppdf.org/import/images" class="doc-link">Images to PDF in the docs &rarr;</a>
+            <a href="https://docs.poppdf.org/import/importing" class="doc-link" target="_blank">Images to PDF in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'from-images.php';

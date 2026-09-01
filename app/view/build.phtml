@@ -9,6 +9,7 @@ $sections = [
     'annotations' => 'Annotations',
     'paths'       => 'Paths',
     'forms'       => 'Forms',
+    'security'    => 'Encryption',
 ];
 include __DIR__ . '/partials/subnav.phtml';
 ?>
@@ -28,7 +29,7 @@ include __DIR__ . '/partials/subnav.phtml';
             </div>
             <p class="feature__lead">No template language, no config, no rendering engine. Make a document, add a font, add a page, put text on it.</p>
             <p class="feature__note">To send it to the browser instead of disk, swap the last line for <span class="code-inline code-inline--em">Pdf::outputToHttp()</span>.</p>
-            <a href="https://docs.poppdf.org/build/simple" class="doc-link">Simple generation in the docs &rarr;</a>
+            <a href="https://docs.poppdf.org/build/documents" class="doc-link" target="_blank">Simple generation in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'hello.php';
@@ -67,7 +68,7 @@ include __DIR__ . '/partials/code-window.phtml';
                 <div>Borders and background colors on any element, not just cells</div>
             </div>
             <p class="limit">Known limits: no <span class="code-inline code-inline--sm">border-collapse</span>, no nested tables, and less common CSS may not be covered.</p>
-            <a href="https://docs.poppdf.org/build/html" class="doc-link">HTML parsing in the docs &rarr;</a>
+            <a href="https://docs.poppdf.org/build/html" class="doc-link" target="_blank">HTML parsing in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'invoice.php';
@@ -99,7 +100,7 @@ include __DIR__ . '/partials/code-window.phtml';
                 <div>Page management as methods &mdash; copy, reorder, delete</div>
                 <div>Text alignment and wrapping inside a bounding box</div>
             </div>
-            <a href="https://docs.poppdf.org/build/documents" class="doc-link">Documents and pages in the docs &rarr;</a>
+            <a href="https://docs.poppdf.org/build/pages" class="doc-link" target="_blank">Documents and pages in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'report.php';
@@ -143,7 +144,7 @@ include __DIR__ . '/partials/code-window.phtml';
             </div>
             <p class="feature__lead">The standard 14 fonts are built in and ship with every reader. Embed TrueType, OpenType or Type1 and they compile as composite CID fonts with a <span class="code-inline code-inline--lg">/ToUnicode</span> CMap &mdash; so non-Latin text renders correctly <em>and</em> still copies and extracts.</p>
             <p class="feature__note">A missing glyph throws at compile time, naming the font and the character &mdash; not mojibake in production.</p>
-            <a href="https://docs.poppdf.org/build/fonts" class="doc-link">Fonts in the docs &rarr;</a>
+            <a href="https://docs.poppdf.org/build/fonts" class="doc-link" target="_blank">Fonts in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'fonts.php';
@@ -188,7 +189,7 @@ include __DIR__ . '/partials/code-window.phtml';
                 <h2 class="feature__title">Annotations &amp; links</h2>
             </div>
             <p class="feature__lead">Link out to a URL, or jump to a page, coordinate and zoom level inside the same document &mdash; which is what a generated table of contents needs.</p>
-            <a href="https://docs.poppdf.org/build/annotations" class="doc-link">Annotations in the docs &rarr;</a>
+            <a href="https://docs.poppdf.org/build/annotations" class="doc-link" target="_blank">Annotations in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'links.php';
@@ -247,7 +248,7 @@ include __DIR__ . '/partials/code-window.phtml';
             </div>
             <p class="feature__lead">Vector graphics, not a bitmap pasted on top. Lines, rectangles, rounded rectangles, polygons, ellipses, arcs, chords and pies, with fill, stroke, dash and clipping styles.</p>
             <p class="feature__note">Enough to draw charts, rules, watermarks and callouts without leaving PHP.</p>
-            <a href="https://docs.poppdf.org/build/paths" class="doc-link">Paths in the docs &rarr;</a>
+            <a href="https://docs.poppdf.org/build/paths" class="doc-link" target="_blank">Paths in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'paths.php';
@@ -287,7 +288,7 @@ include __DIR__ . '/partials/code-window.phtml';
             </div>
             <p class="feature__lead">Fillable PDFs, generated. Text, multiline, single- and multi-select choice, combo, push-button and radio fields, attached to a named form on the document.</p>
             <p class="limit">Reader support for form fields varies. Adobe&rsquo;s readers are the reliable target.</p>
-            <a href="https://docs.poppdf.org/build/forms" class="doc-link">Forms in the docs &rarr;</a>
+            <a href="https://docs.poppdf.org/build/forms" class="doc-link" target="_blank">Forms in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'form.php';
@@ -315,6 +316,55 @@ $code     = <<<'HTML'
 <span class="tok-var">$page</span>-&gt;<span class="tok-fn">addField</span>(<span class="tok-var">$name</span>, <span class="tok-str">'contact'</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">700</span>);
 
 <span class="tok-type">Pdf</span>::<span class="tok-fn">writeToFile</span>(<span class="tok-var">$document</span>, <span class="tok-str">'form.pdf'</span>);
+HTML;
+include __DIR__ . '/partials/code-window.phtml';
+?>
+    </div>
+</section>
+
+<section id="security" class="feature">
+    <div class="feature__grid">
+        <div>
+            <div class="feature__head">
+                <span class="feature__num">08</span>
+                <h2 class="feature__title">Encryption &amp; permissions</h2>
+            </div>
+            <p class="feature__lead">Lock the document you just built. AES&#8209;256 by default, AES&#8209;128 if something older has to read it, and a permissions object that switches off printing, copying, modifying, annotating, form filling or assembly &mdash; each one allowed until you say otherwise.</p>
+            <p class="feature__note">The user password opens the document; the owner password overrides the permissions. Leave the owner password unset and one is generated for you, so a blank password is never the way around them.</p>
+            <p class="limit">RC4 is refused rather than unimplemented. It is broken, and writing it would only make a document look protected.</p>
+            <a href="https://docs.poppdf.org/build/security" class="doc-link" target="_blank">Encryption in the docs &rarr;</a>
+        </div>
+<?php
+$codeFile = 'protect.php';
+$code     = <<<'HTML'
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Pdf</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Font</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Page</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Security</span>;
+<span class="tok-kw">use</span> <span class="tok-type">Pop\Pdf\Document\Permissions</span>;
+
+<span class="tok-var">$document</span> = <span class="tok-kw">new</span> <span class="tok-type">Document</span>();
+<span class="tok-var">$document</span>-&gt;<span class="tok-fn">addFont</span>(<span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>);
+
+<span class="tok-var">$page</span> = <span class="tok-var">$document</span>-&gt;<span class="tok-fn">createPage</span>(<span class="tok-type">Page</span>::<span class="tok-fn">LETTER</span>);
+<span class="tok-var">$page</span>-&gt;<span class="tok-fn">addText</span>(
+    <span class="tok-str">'Confidential'</span>, <span class="tok-type">Font</span>::<span class="tok-fn">ARIAL</span>, x: <span class="tok-num">50</span>, y: <span class="tok-num">742</span>
+);
+
+<span class="tok-var">$permissions</span> = (<span class="tok-kw">new</span> <span class="tok-type">Permissions</span>())
+    -&gt;<span class="tok-fn">allowPrinting</span>(<span class="tok-kw">false</span>)
+    -&gt;<span class="tok-fn">allowCopying</span>(<span class="tok-kw">false</span>);
+
+<span class="tok-var">$security</span> = <span class="tok-kw">new</span> <span class="tok-type">Security</span>(
+    userPassword: <span class="tok-str">'open-me'</span>,
+    ownerPassword: <span class="tok-str">'admin123'</span>,
+    permissions: <span class="tok-var">$permissions</span>
+);
+
+<span class="tok-var">$document</span>-&gt;<span class="tok-fn">setSecurity</span>(<span class="tok-var">$security</span>);
+
+<span class="tok-type">Pdf</span>::<span class="tok-fn">writeToFile</span>(<span class="tok-var">$document</span>, <span class="tok-str">'protected.pdf'</span>);
 HTML;
 include __DIR__ . '/partials/code-window.phtml';
 ?>

@@ -19,11 +19,12 @@ include __DIR__ . '/partials/subnav.phtml';
     <div class="feature__grid">
         <div>
             <div class="feature__head">
-                <span class="feature__num">11</span>
+                <span class="feature__num">13</span>
                 <h2 class="feature__title">Extract text</h2>
             </div>
             <p class="feature__lead">Pull the text out of a document, all of it or page by page. Both arguments are there for volume: name the pages you care about, or cap how many get processed on a file that could be thousands.</p>
-            <a href="https://docs.poppdf.org/extract/text" class="doc-link">Text extraction in the docs &rarr;</a>
+            <p class="feature__note">Encrypted source? A fourth argument takes the password &mdash; <span class="code-inline code-inline--em">Pdf::extractTextFromFile($file, password: $pw)</span>. Image-only detection takes it too.</p>
+            <a href="https://docs.poppdf.org/extract/text" class="doc-link" target="_blank">Text extraction in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'text.php';
@@ -51,12 +52,12 @@ include __DIR__ . '/partials/code-window.phtml';
     <div class="feature__grid">
         <div>
             <div class="feature__head">
-                <span class="feature__num">12</span>
+                <span class="feature__num">14</span>
                 <h2 class="feature__title">Image-only detection</h2>
             </div>
             <p class="feature__lead">A scanned document looks identical to a real one until you try to read it, and then you get an empty string back with nothing to explain it. One call tells you which you have, so the pipeline can route instead of guess.</p>
             <p class="feature__note">Mixed documents &mdash; a typed contract with scanned exhibits stapled on the end &mdash; report per page.</p>
-            <a href="https://docs.poppdf.org/extract/detection" class="doc-link">Detection in the docs &rarr;</a>
+            <a href="https://docs.poppdf.org/extract/image-only" class="doc-link" target="_blank">Detection in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'detect.php';
@@ -81,12 +82,12 @@ include __DIR__ . '/partials/code-window.phtml';
     <div class="feature__grid">
         <div>
             <div class="feature__head">
-                <span class="feature__num">13</span>
+                <span class="feature__num">15</span>
                 <h2 class="feature__title">Extract as images</h2>
             </div>
             <p class="feature__lead">One image per page at 300 DPI, written to disk one at a time so memory stays flat no matter how long the document runs. <span class="code-inline code-inline--em">jpg</span>, <span class="code-inline code-inline--em">png</span>, <span class="code-inline code-inline--em">webp</span> and <span class="code-inline code-inline--em">tiff</span>; lossy formats are written at quality 90 to protect OCR accuracy.</p>
             <p class="limit">Uses the Imagick extension &mdash; the one feature that needs it. Pop PDF does not perform OCR; it detects the scans and produces the images an OCR engine takes as input.</p>
-            <a href="https://docs.poppdf.org/extract/images" class="doc-link">Rasterizing in the docs &rarr;</a>
+            <a href="https://docs.poppdf.org/extract/images" class="doc-link" target="_blank">Rasterizing in the docs &rarr;</a>
         </div>
 <?php
 $codeFile = 'rasterize.php';
