@@ -15,7 +15,7 @@
         --font-mono: "IBM Plex Mono", monospace;
 
         --ground: #faf8f4;
-        --nav-bg: rgba(250, 248, 244, .92);
+        --nav-bg: rgba(250, 248, 244, 1);
         --panel: #f3eee6;
         --panel-2: #efe8dd;
         --card: #ffffff;
@@ -53,7 +53,7 @@
 
     :root[data-theme="dark"] {
         --ground: #181614;
-        --nav-bg: rgba(24, 22, 20, .92);
+        --nav-bg: rgba(24, 22, 20, 1);
         --panel: #201e1c;
         --panel-2: #2a2723;
         --card: #262320;
