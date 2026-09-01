@@ -188,7 +188,7 @@ include __DIR__ . '/partials/code-window.phtml';
                 <span class="feature__num">05</span>
                 <h2 class="feature__title">Annotations &amp; links</h2>
             </div>
-            <p class="feature__lead">Link out to a URL, or jump to a page, coordinate and zoom level inside the same document &mdash; which is what a generated table of contents needs.</p>
+            <p class="feature__lead">Link out to a URL, or jump to a page &mdash; coordinate and zoom level inside the same document &mdash; which is what a generated table of contents needs.</p>
             <a href="https://docs.poppdf.org/build/annotations" class="doc-link" target="_blank">Annotations in the docs &rarr;</a>
         </div>
 <?php
@@ -246,7 +246,7 @@ include __DIR__ . '/partials/code-window.phtml';
                 <span class="feature__num">06</span>
                 <h2 class="feature__title">Drawing paths</h2>
             </div>
-            <p class="feature__lead">Vector graphics, not a bitmap pasted on top. Lines, rectangles, rounded rectangles, polygons, ellipses, arcs, chords and pies, with fill, stroke, dash and clipping styles.</p>
+            <p class="feature__lead">Vector graphics, not a bitmap pasted on top. Lines, rectangles, ellipses, polygons and more &mdash; all with fill, stroke, dash and clipping styles.</p>
             <p class="feature__note">Enough to draw charts, rules, watermarks and callouts without leaving PHP.</p>
             <a href="https://docs.poppdf.org/build/paths" class="doc-link" target="_blank">Paths in the docs &rarr;</a>
         </div>
@@ -331,7 +331,7 @@ include __DIR__ . '/partials/code-window.phtml';
             </div>
             <p class="feature__lead">Lock the document you just built. AES&#8209;256 by default, AES&#8209;128 if something older has to read it, and a permissions object that switches off printing, copying, modifying, annotating, form filling or assembly &mdash; each one allowed until you say otherwise.</p>
             <p class="feature__note">The user password opens the document; the owner password overrides the permissions. Leave the owner password unset and one is generated for you, so a blank password is never the way around them.</p>
-            <p class="limit">RC4 is refused rather than unimplemented. It is broken, and writing it would only make a document look protected.</p>
+            <p class="limit">Reader support for security features varies. Permissions in particular are honored at the reader&rsquo;s discretion.</p>
             <a href="https://docs.poppdf.org/build/security" class="doc-link" target="_blank">Encryption in the docs &rarr;</a>
         </div>
 <?php
